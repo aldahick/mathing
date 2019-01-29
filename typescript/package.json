@@ -1,0 +1,32 @@
+{
+  "name": "@aldahick/mathing",
+  "version": "0.0.1",
+  "description": "A whole bunch of math stuff",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha dist/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldahick/mathing.git"
+  },
+  "author": "Alex Hicks <alex@alexhicks.net> (https://alexhicks.net)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aldahick/mathing/issues"
+  },
+  "homepage": "https://github.com/aldahick/mathing#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@aldahick/tslint-rules": "0.0.2",
+    "@types/lodash": "^4.14.120",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.19",
+    "mocha": "^5.2.0",
+    "tslint": "^5.12.1",
+    "tslint-sonarts": "^1.9.0",
+    "typescript": "^3.2.4"
+  }
+}
