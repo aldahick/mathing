@@ -53,4 +53,13 @@ describe("Matrix", () => {
       assert.equal(matrix3x3().determinant(), 0);
     });
   });
+  describe("#rref()", () => {
+    it("should return the correct reduced row echelon form", () => {
+      assert.deepEqual(matrix3x3().rref(), new Matrix([
+        [1, 0, -1],
+        [0, 1, 2],
+        [0, 0, 0]
+      ]));
+    });
+  });
 });
