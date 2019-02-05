@@ -22,6 +22,14 @@ export class Matrix {
     return this.rows.map(r => r[x]);
   }
 
+  scaleRow(i: number, scalar: number): void {
+    this.rows[i] = this.rows[i].map(v => v * scalar);
+  }
+
+  addScaledRow(to: number, from: number, scalar = 1): void {
+    this.rows[to] = this.rows[to].map((v, j) => v + (this.rows[from][j] * scalar));
+  }
+
   swap(a: number, b: number): void {
     const temp = this.rows[b];
     this.rows[b] = this.rows[a];
@@ -50,34 +58,35 @@ export class Matrix {
 
   /**
    * reduced row echelon form
+   * currently naive implementation of algorithm, might be optimizable
    */
   rref(): Matrix {
     const m = new Matrix(this.rows.map(r => r.map(c => c)));
     let y = 0;
     let x = 0;
-    do {
+    while (true) {
+      if (y === m.height || x === m.width) break;
       if (m.rows[y][x] === 0) {
-        if (m.col(x).every(i => i === 0)) {
+        const toSwap = m.col(x).slice(y + 1).findIndex(v => v !== 0);
+        if (toSwap === -1) {
           x++;
-          console.log("zeroes", m, y, x);
-          continue;
-        } else if (y !== m.height - 1) {
-          m.swap(y, y + 1);
-          console.log("swap", m, y, x);
-          continue;
+        } else {
+          m.swap(y, y + toSwap);
         }
+        continue;
       }
-      m.rows[y] = m.rows[y].map(i => i / m.rows[y][x]);
-      for (let y2 = 0; y2 < m.height; y2++) {
-        if (y2 === y) continue;
-        m.rows[y2] = m.rows[y2].map((i, x2) =>
-          i - (m.rows[y2][x2] * m.rows[y][x])
-        );
+      m.scaleRow(y, 1 / m.rows[y][x]);
+      for (let i = 0; i < m.height; i++) {
+        if (i === y) continue;
+        m.addScaledRow(i, y, -m.rows[i][x]);
       }
-      y++;
       x++;
-      console.log(y, x);
-    } while (y < m.height && x < m.width);
+      y++;
+    }
     return m;
+  }
+
+  toString() {
+    return this.rows.map(r => r.join(" ")).join("\n");
   }
 }
