@@ -60,6 +60,10 @@ describe("Matrix", () => {
         [0, 1, 2],
         [0, 0, 0]
       ]));
+      assert.deepEqual(matrix2x2().rref(), new Matrix([
+        [1, 0],
+        [0, 1]
+      ]));
     });
   });
 });
